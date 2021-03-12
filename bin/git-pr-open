@@ -2,9 +2,10 @@
 
 set -euo pipefail
 
-readonly remote_url="$(git ls-remote --get-url)"
+remote_url="$(git ls-remote --get-url)"
+readonly remote_url=$remote_url
 
-push=$1
+push="${1:-}"
 function push() {
     [[ "$push" = '--push' ]]
 }
@@ -24,6 +25,7 @@ case "$remote_url" in
         # Use GitHub's cli to create the PR from the branch.
         gh pr create --fill
         ;;
+
     *gitlab.*)
         if ! push
         then
@@ -31,7 +33,9 @@ case "$remote_url" in
             read -rp "Continue? (y/n): " yn
             [[ "$yn" =~ [Yy].* ]] || exit 1
         fi
-        git -c push.default=current push -o merge_request.create ;;
+        git -c push.default=current push -o merge_request.create
+        ;;
+
     *bitbucket.*)
         if push
         then
@@ -40,5 +44,8 @@ case "$remote_url" in
 
         git-pr_open_bitbucket "$remote_url"
         ;;
-    *) exit 1;;
+
+    *)
+        echo "Could not match remote url: $remote_url"
+        exit 1 ;;
 esac

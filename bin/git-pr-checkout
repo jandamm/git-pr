@@ -2,9 +2,18 @@
 
 set -euo pipefail
 
-readonly remote_url="$(git ls-remote --get-url)"
+remote_url="$(git ls-remote --get-url)"
+readonly remote_url=$remote_url
 
-pr_number=$1
+set +u
+if [[ -z "$1" ]]
+then
+	echo "You need to provied a pr number." >&2
+	exit 1
+else
+	pr_number=$1
+fi
+set -u
 
 case "$remote_url" in
 	*github.*)
@@ -12,8 +21,11 @@ case "$remote_url" in
 		;;
 	*gitlab.*)
 		echo 'Not yet implemented for gitlab' >&2
-		exit 1 ;;
+		exit 2 ;;
 	*bitbucket.*)
 		echo 'Not yet implemented for bitbucket' >&2
+		exit 2 ;;
+	*)
+		echo "Could not macht remote url: $remote_url" >&2
 		exit 1 ;;
 esac
