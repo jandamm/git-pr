@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+function error() {
+	$quiet || printf "%s\n" $2 >&2
+	exit $1
+}
+
+# TODO: Print usage/help
+[[ -z $1 ]] && error 254 "No subcommand provided."
+
+cmd=git-pr-$1
+
+if ! hash $cmd &>/dev/null
+then error 255 "Unknown subcommand of git pr: $1"
+fi
+
+shift
+$cmd $@
