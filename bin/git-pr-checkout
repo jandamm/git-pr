@@ -12,5 +12,8 @@ case "$remote_url" in
 		;;
 	*gitlab.*)
 		echo 'Not yet implemented for gitlab' >&2
-		exit 123 ;;
+		exit 1 ;;
+	*bitbucket.*)
+		echo 'Not yet implemented for bitbucket' >&2
+		exit 1 ;;
 esac
