@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+root=${0:a:h}/..
+file=$root/doc/help/$1
+
+if [[ -f $file ]]
+then
+	echo 'Usage:'
+	cat $file
+	if [[ $1 = 'git-pr' ]]
+	then
+		printf '\nAvailable commands:\n'
+		for f in $root/bin/git-pr-*
+		do
+			echo "- ${f##*-}"
+		done
+	fi
+else
+	echo "No help provided for $file." >&2
+fi

@@ -6,7 +6,11 @@ function error() {
 }
 
 # TODO: Print usage/help
-[[ -z $1 ]] && error 254 "No subcommand provided."
+if [[ -z $1 ]]
+then
+	git-pr_help git-pr
+	exit
+fi
 
 cmd=git-pr-$1
 
@@ -15,4 +19,9 @@ then error 255 "Unknown subcommand of git pr: $1"
 fi
 
 shift
-$cmd $@
+if [[ $1 = '--help' ]]
+then
+	git-pr_help $cmd
+else
+	$cmd $@
+fi

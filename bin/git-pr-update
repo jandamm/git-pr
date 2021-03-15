@@ -7,8 +7,9 @@ function error() {
     exit "$1"
 }
 
-if [[ $# -ne 1 ]]; then
-    error 0 "usage: $0 <pr-commit>"
+if [[ -z $1 ]]; then
+    git-pr_help git-pr-update
+    exit 0
 fi
 
 if [ -n "$(git status --porcelain --untracked-files=no 2>&1)" ]; then
@@ -16,7 +17,7 @@ if [ -n "$(git status --porcelain --untracked-files=no 2>&1)" ]; then
 fi
 
 readonly default_branch="$(git-pr_default_branch)"
-readonly pr_commit="${1:-$default_branch}"
+readonly pr_commit="$1"
 
 readonly branch_name="$(git-pr_branch_name "$pr_commit")"
 

@@ -1,8 +1,10 @@
 {
-  "bin/git-pr": { "type": "bin" },
-  "bin/git-pr-*": { "type": "bin" },
+  "bin/git-pr": { "type": "bin", "alternate": "doc/help/git-pr" },
+  "bin/git-pr-*": { "type": "bin", "alternate": "doc/help/git-pr-{}" },
   "functions/_git-pr": { "type": "completion" },
   "functions/_*": { "type": "completion" },
-  "README.md": { "type": "doc" },
+  "README.md": { "type": "readme" },
+  "doc/help/git-pr": { "type": "doc", "alternate": "bin/git-pr" },
+  "doc/help/git-pr-*": { "type": "doc", "alternate": "bin/git-pr-{}" },
   "bin/git-pr_*": { "type": "private" }
 }

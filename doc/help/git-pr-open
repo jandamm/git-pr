@@ -1,0 +1,4 @@
+git pr open [--push]
+
+Create a pull request for the current branch. Optionally push the branch first.
+(Pushing is required for some providers.)
