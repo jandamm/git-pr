@@ -1,4 +1,4 @@
-git pr open [--push]
+git pr open [--no-push]
 
-Create a pull request for the current branch. Optionally push the branch first.
+Create a pull request for the current branch. Optionally don't push the branch.
 (Pushing is required for some providers.)

@@ -7,7 +7,7 @@ readonly remote_url=$remote_url
 
 push="${1:-}"
 function push() {
-    [[ "$push" = '--push' ]]
+    ! [[ "$push" = '--no-push' ]]
 }
 
 case "$remote_url" in

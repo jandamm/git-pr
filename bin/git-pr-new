@@ -31,7 +31,7 @@ if ! git cherry-pick "$pr_commit"; then
     error 1 '\033[0;31mCould not cherry-pick commit. There is probably a dependency to a previous commit.'
 fi
 
-git-pr-open --push
+git-pr-open
 
 # Go back to $default_branch branch.
 git switch "$default_branch"
