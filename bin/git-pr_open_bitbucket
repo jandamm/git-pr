@@ -14,6 +14,7 @@ function create_pr() {
 			\"title\": \"$title\",
 			\"description\": \"$desc\",
 			\"close_source_branch\": true,
+			$reviewer
 			\"source\": { \"branch\": { \"name\": \"$src\" } },
 			\"destination\": { \"branch\": { \"name\": \"$dest\" } }
 		}"
@@ -24,6 +25,12 @@ readonly title=$(git show -s --format=%s)
 readonly desc=$(git show -s --format=%b)
 readonly dest=$(git-pr_default_branch)
 readonly src=$(git branch --show-current)
+
+reviewer=$(git config --get git-pr.reviewer 2>/dev/null)
+if [[ -n $reviewer ]]
+then
+	reviewer='"reviewers": [{"username": "'$reviewer'"}],'
+fi
 
 tmp=$(mktemp)
 readonly response=$(create_pr 2>$tmp)
