@@ -48,5 +48,11 @@ then
 	exit 0
 else
 	echo "Could not create pr ($stat)." >&2
+	if hash jq &>/dev/null
+	then
+		echo "An error occurred: $(jq .error.message <<< $response)" >&2
+	else
+		echo "Install jq for the error message." >&2
+	fi
 	exit 1
 fi

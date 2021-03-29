@@ -23,7 +23,8 @@ Everything should work with plain `git`.
 
 ### Bitbucket
 
-You need `curl` - which should be preinstalled.
+You need `curl` - which should be preinstalled. It is also recommended to
+install `jq`.
 
 To create prs you need to authorize yourself via netrc:
 
