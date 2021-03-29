@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eou pipefail
+
+if ! git config --get git-pr.jira.prefix &>/dev/null
+then
+	exit 1
+fi
+
+readonly commit="$1"
+readonly suffix="${2:-}"
+readonly jira=$(git config --get git-pr.jira.prefix)
+
+git show "$commit" -s --format=%b \
+	| command grep --max-count 1 -Ee "${jira}[0-9]+"  \
+	| command sed -E "s/^.*${jira}([0-9]+).*$/${jira}\1${suffix}/"
