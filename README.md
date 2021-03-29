@@ -1,14 +1,47 @@
 # git-pr
+
 A collection of scripts to work with prs from the commandline.
+
+The scripts are for `Github`, `Gitlab` and `Bitbucket` but some features are
+only available on a subset.
+
+## Installation & Setup
+
+If you use `zsh` as your shell you can add this repo as a plugin. This should
+work with basically any plugin manager for zsh.
+
+If you use `bash` or any other shell you clone this repo and add `bin` to your
+path. Completions only work with `zsh` for now.
+
+### Github
+
+You need to install [gh](https://github.com/cli/cli).
+
+### Gitlab
+
+Everything should work with plain `git`.
+
+### Bitbucket
+
+You need `curl` - which should be preinstalled.
+
+To create prs you need to authorize yourself via netrc:
+
+``` shell
+echo 'machine bitbucket.org login $username password $accesstoken' >> $HOME/.netrc
+```
+
+Where `$username` is your username (not the email address) and $accesstoken is
+an "App password". You can find both on bitbucket in your "Personal settings".
 
 ## Configuration
 
 ### Jira prefix
 
-Adds the jira ticket number to the pr branch name.
-To match tickets named `ABS1234` execute the following command.
+Adds the jira ticket number to the pr branch name. To match tickets named
+`ABS1234` execute the following command.
 
-```
+``` shell
 git config --add git-pr.jira.prefix 'ABC'
 ```
 
@@ -16,6 +49,6 @@ git config --add git-pr.jira.prefix 'ABC'
 
 Automatically assign a new pr to another user.
 
-```
+``` shell
 git config --add git-pr.reviewer 'username'
 ```
