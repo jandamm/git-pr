@@ -17,7 +17,7 @@ set -u
 
 case "$remote_url" in
 	*github.*)
-		git fetch origin "pull/123/$pr_number:pr/$pr_number"
+		gh pr checkout "$pr_number"
 		;;
 	*gitlab.*)
 		echo 'Not yet implemented for gitlab' >&2
