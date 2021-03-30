@@ -7,10 +7,10 @@ function _last_refs() {
 }
 
 if [[ $state = 'cmd' ]]; then
-	_values command 'new' 'update' 'checkout' 'open'
+	_values command 'new' 'update' 'checkout' 'open' 'branch'
 else
 	case $line[1] in
-		new|update)  _last_refs;;
 		open) _values option --pull;;
+		new|update|branch)  _last_refs;;
 	esac
 fi

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly pr_commit="${1:-head}"
+readonly branch_name="$(git-pr_branch_name "$pr_commit")"
+
+git switch "$branch_name"
