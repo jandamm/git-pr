@@ -23,7 +23,10 @@ case "$remote_url" in
             git -c push.default=current push
         fi
         # Use GitHub's cli to create the PR from the branch.
-        gh pr create --fill
+        gh pr create \
+            --title "$(git-pr_get_title)" \
+            --body "$(git-pr_get_desc)" \
+            --reviewer "$(git-pr_get_reviewer)"
         ;;
 
     *gitlab.*)

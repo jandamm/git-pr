@@ -48,7 +48,7 @@ Adds the jira ticket number to the pr branch name. To match tickets named
 git config --add git-pr.jira.prefix 'ABC'
 ```
 
-### Reviewer (bitbucket)
+### Reviewer (github, bitbucket)
 
 Automatically assign a new pr to another user.
 

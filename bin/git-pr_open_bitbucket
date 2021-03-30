@@ -21,12 +21,12 @@ function create_pr() {
 }
 
 readonly repo=${${remote_url#*bitbucket.org?}%.git}
-readonly title=$(git show -s --format=%s)
-readonly desc=$(git show -s --format=%b)
+readonly title=$(git-pr_get_title)
+readonly desc=$(git-pr_get_desc)
 readonly dest=$(git-pr_default_branch)
 readonly src=$(git branch --show-current)
 
-reviewer=$(git config --get git-pr.reviewer 2>/dev/null)
+reviewer=$(git-pr_get_reviewer)
 if [[ -n $reviewer ]]
 then
 	reviewer='"reviewers": [{"username": "'$reviewer'"}],'

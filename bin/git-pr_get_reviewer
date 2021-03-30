@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+if ! git config --get git-pr.reviewer 2>/dev/null
+then
+	echo $1
+fi
