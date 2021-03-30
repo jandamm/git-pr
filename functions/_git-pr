@@ -10,7 +10,7 @@ if [[ $state = 'cmd' ]]; then
 	_values command 'new' 'update' 'checkout' 'open' 'branch'
 else
 	case $line[1] in
-		open) _values option --pull;;
 		new|update|branch)  _last_refs;;
+		open) _values option --no-pull;;
 	esac
 fi
