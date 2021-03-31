@@ -7,7 +7,7 @@ function _last_refs() {
 }
 
 if [[ $state = 'cmd' ]]; then
-	_values command 'new' 'update' 'checkout' 'open' 'branch'
+	_values command 'new' 'update' 'checkout' 'open' 'switch'
 else
 	case $line[1] in
 		new|update|branch)  _last_refs;;
