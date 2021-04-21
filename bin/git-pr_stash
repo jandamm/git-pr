@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+function error() {
+    printf "%s\n" "$2" >&2
+    exit "$1"
+}
+
+file=$(git rev-parse --show-toplevel)/.git/git-pr-stash
+
+if [[ "$1" = 'save' ]]; then
+	if [ -n "$(git status --porcelain --untracked-files=no 2>&1)" ]; then
+		echo "The working copy isn't clean."
+		read -rp 'Do you want to stash? (y/n): ' yn
+		[[ "$yn" =~ [Yy].* ]] || error 1 "Stash before using this script."
+		git stash save
+		touch "$file"
+	elif [[ -f "$file" ]]; then
+		rm "$file"
+	fi
+elif [[ "$1" = 'pop' ]]; then
+	if [[ -f "$file" ]]; then
+		rm "$file"
+		git stash pop
+	fi
+fi
