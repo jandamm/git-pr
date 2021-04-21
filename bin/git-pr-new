@@ -7,9 +7,7 @@ function error() {
     exit "$1"
 }
 
-if [ -n "$(git status --porcelain --untracked-files=no 2>&1)" ]; then
-    error 0 "Stash before using this script."
-fi
+git-pr_stash save
 
 readonly default_branch="$(git-pr_default_branch)"
 readonly pr_commit="${1:-$default_branch}"
@@ -28,6 +26,7 @@ if ! git cherry-pick "$pr_commit"; then
     git cherry-pick --abort
     git switch "$default_branch"
     git branch -d "$branch_name"
+    git-pr_stash pop
     error 1 '\033[0;31mCould not cherry-pick commit. There is probably a dependency to a previous commit.'
 fi
 
@@ -35,3 +34,5 @@ git-pr-open
 
 # Go back to $default_branch branch.
 git switch "$default_branch"
+
+git-pr_stash pop

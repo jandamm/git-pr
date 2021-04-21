@@ -12,9 +12,7 @@ if [[ -z $1 ]]; then
     exit 0
 fi
 
-if [ -n "$(git status --porcelain --untracked-files=no 2>&1)" ]; then
-    error 0 "Stash before using this script."
-fi
+git-pr_stash save
 
 readonly default_branch="$(git-pr_default_branch)"
 readonly pr_commit="$1"
@@ -27,6 +25,7 @@ git switch "$branch_name"
 if ! git cherry-pick "$default_branch"; then
     git cherry-pick --abort
     git switch "$default_branch"
+    git-pr_stash pop
     printf '\033[0;31mCould not cherry-pick commit. There is probably a dependency to a previous commit.\n'
     exit 1
 fi
@@ -45,3 +44,5 @@ export GIT_SEQUENCE_EDITOR=/usr/bin/true
 git commit --amend --fixup="$pr_commit"
 # 2. Use the autosquash feature of interactive rebase to perform the squash.
 git rebase --interactive --autosquash "${pr_commit}^"
+
+git-pr_stash pop
