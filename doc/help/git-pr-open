@@ -1,4 +1,10 @@
-git pr open [--no-push]
+git pr open
 
 Create a pull request for the current branch. Optionally don't push the branch.
 (Pushing is required for some providers.)
+
+--no-push     :   Don't push changes to the remote
+-t --title    :   Define a title for the PR instead of using last commits title.
+-d --desc     :   Define a body for the PR instead of using last commits body.
+--reviewer    :   Define a reviewer for the PR instead of using the default reviewer (if set).
+                  Use without argument to overwrite the default reviewer.

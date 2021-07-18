@@ -1,13 +1,28 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -euo pipefail
+
+zparseopts -D -E -no-push=push -title:=title -desc:=desc t:=title d:=desc -reviewer::=reviewer
 
 remote_url="$(git ls-remote --get-url)"
 readonly remote_url=$remote_url
 
-push="${1:-}"
 function push() {
-    ! [[ "$push" = '--no-push' ]]
+    [[ -z $push ]]
+}
+
+function title() {
+    echo ${title[2]:-$(git-pr_get_title)}
+}
+function desc() {
+    echo ${desc[2]:-$(git-pr_get_desc)}
+}
+function reviewer() {
+    if [[ -n $reviewer[1] ]]; then
+        echo ${reviewer[1]##--reviewer}
+    else
+        git-pr_get_reviewer
+    fi
 }
 
 case "$remote_url" in
@@ -24,9 +39,9 @@ case "$remote_url" in
         fi
         # Use GitHub's cli to create the PR from the branch.
         gh pr create \
-            --title "$(git-pr_get_title)" \
-            --body "$(git-pr_get_desc)" \
-            --reviewer "$(git-pr_get_reviewer)"
+            --title "$(title)" \
+            --body "$(desc)" \
+            --reviewer "$(reviewer)"
         ;;
 
     *gitlab.*)
@@ -44,8 +59,7 @@ case "$remote_url" in
         then
             git -c push.default=current push
         fi
-
-        git-pr_open_bitbucket "$remote_url"
+        git-pr_open_bitbucket "$remote_url" "$(title)" "$(desc | tr "\n" ' ')" "$(reviewer)"
         ;;
 
     *)

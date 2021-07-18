@@ -2,7 +2,10 @@
 
 set -euo pipefail
 
-readonly remote_url="$1"
+readonly remote_url=$1
+readonly title=$2
+readonly desc=$3
+reviewer=$4
 
 function create_pr() {
 	curl -q -sw '%{stderr}%{http_code}' \
@@ -21,12 +24,9 @@ function create_pr() {
 }
 
 readonly repo=${${remote_url#*bitbucket.org?}%.git}
-readonly title=$(git-pr_get_title)
-readonly desc=$(git-pr_get_desc | tr "\n" ' ')
 readonly dest=$(git-pr_default_branch)
 readonly src=$(git branch --show-current)
 
-reviewer=$(git-pr_get_reviewer)
 if [[ -n $reviewer ]]
 then
 	reviewer='"reviewers": [{"username": "'$reviewer'"}],'
