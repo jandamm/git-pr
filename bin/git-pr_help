@@ -10,7 +10,8 @@ then
 	if [[ $1 = 'git-pr' ]]
 	then
 		printf '\nAvailable commands:\n'
-		for f in $root/bin/git-pr-*
+		setopt extendedglob
+		for f in $root/bin/git-pr-*~*.zwc
 		do
 			echo "- ${f##*-}"
 		done

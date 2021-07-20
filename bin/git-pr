@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 
 function error() {
-	$quiet || printf "%s\n" $2 >&2
+	printf "%s\n" $2 >&2
 	exit $1
 }
 
-# TODO: Print usage/help
+# Unfortunately `git pr --help` is "eaten" by git.
 if [[ -z $1 ]]
 then
 	git-pr_help git-pr
