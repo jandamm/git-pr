@@ -12,14 +12,14 @@ function push() {
 }
 
 function title() {
-    echo ${title[2]:-$(git-pr_get_title)}
+    printf '%s' "${title[2]:-$(git-pr_get_title)}"
 }
 function desc() {
-    echo ${desc[2]:-$(git-pr_get_desc)}
+    printf '%s\n' "${desc[2]:-$(git-pr_get_desc)}"
 }
 function reviewer() {
     if [[ -n $reviewer ]]; then
-        echo ${reviewer[1]##--reviewer}
+        printf '%s' "${reviewer[1]##--reviewer}"
     else
         git-pr_get_reviewer
     fi
