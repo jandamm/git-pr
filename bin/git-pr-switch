@@ -1,8 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -euo pipefail
+
+zparseopts -D -E c=create -create=create
 
 readonly pr_commit="${1:-head}"
 readonly branch_name="$(git-pr_branch_name "$pr_commit")"
 
-git switch "$branch_name"
+git switch ${create:-} "$branch_name"

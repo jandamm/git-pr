@@ -1,34 +1,37 @@
 #compdef git-pr
 
 
-function _last_refs() {
+function _git-pr_last_refs() {
 	local refs=$(git log --format='%h' head...origin/head 2>/dev/null)
 	if [[ -n $refs ]]; then
 		_values refs $refs
 	fi
 
 }
-function _commands() {
-	local commands=(
-		'new:Create a new pr from the given commit.'
-		'update:Update the pr of the commit with the latest commit.'
-		'checkout:Checkout the pr by providing the number of the pr.'
-		'open:Create a pr for the current branch.'
-		'switch:Checkout the pr branch of the given commit.'
-	)
-	_describe -t commands 'command' commands "$@"
-}
 
 function _git-pr() {
-	_arguments '1: :_commands' '*: :->args'
+	_arguments '1: :->commands' '*: :->args'
 
-	if [[ $state = 'args' ]]; then
-		case $words[2] in
-			new|update|branch) _last_refs;;
-			open) _values -w option --no-push -t --title -d --desc --reviewer;;
-		esac
-		_values -w option '--help'
-	fi
+	case $state in
+		commands)
+			local commands=(
+				'new:Create a new pr from the given commit.'
+				'update:Update the pr of the commit with the latest commit.'
+				'checkout:Checkout the pr by providing the number of the pr.'
+				'open:Create a pr for the current branch.'
+				'switch:Checkout the pr branch of the given commit.'
+			)
+			_describe -t commands 'command' commands "$@"
+			;;
+		args)
+			case $words[2] in
+				new|update|branch) _git-pr_last_refs;;
+				open) _values -w option --no-push -t --title -d --desc --reviewer;;
+				switch) _values -w option --create -c;;
+			esac
+			_values -w option '--help'
+			;;
+	esac
 }
 
 _git-pr $@
