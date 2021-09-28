@@ -1,3 +1,5 @@
 git pr branch [commit]
 
 Checkout branch created for the given commit.
+
+-c --create   :   Create a branch for the given commit
