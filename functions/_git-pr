@@ -37,6 +37,7 @@ function _git-pr() {
 			update) _git-pr_last_refs;;
 			switch)
 				_git-pr_last_refs
+				options+=('-c[Create and switch to a new branch]' '--create[Create and switch to a new branch]')
 				;;
 		esac
 		_values -w option $options
