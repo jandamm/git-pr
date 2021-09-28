@@ -2,3 +2,5 @@ git pr new [commit]
 
 Create a pr branch for the given commit and create a pull request.
 If no commit is provided HEAD is used.
+
+--draft --wip :   Create PR as a draft

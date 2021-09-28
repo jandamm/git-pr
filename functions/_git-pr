@@ -24,6 +24,7 @@ function _git-pr() {
 		local options=('--help[Show help]' '-h[Show help]')
 		case $words[2] in
 			new)
+				options+=('--draft[Create a draft pr]' '--wip[Create a draft pr]')
 				_git-pr_last_refs;;
 			open)
 				options+=(
@@ -33,6 +34,8 @@ function _git-pr() {
 				'-d[Define the description of the pr]'
 				'--desc[Define the description of the pr]'
 				'--reviewer[Define the reviewer of the pr]'
+				'--draft[Create a draft pr]'
+				'--wip[Create a draft pr]'
 			) ;;
 			update) _git-pr_last_refs;;
 			switch)

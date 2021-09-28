@@ -8,3 +8,4 @@ Create a pull request for the current branch. Optionally don't push the branch.
 -d --desc     :   Define a body for the PR instead of using last commits body.
 --reviewer    :   Define a reviewer for the PR instead of using the default reviewer (if set).
                   Use without argument to overwrite the default reviewer.
+--draft --wip :   Create PR as a draft

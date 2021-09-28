@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-zparseopts -D -E -no-push=push -title:=title -desc:=desc t:=title d:=desc -reviewer::=reviewer
+zparseopts -D -E -no-push=push -title:=title -desc:=desc t:=title d:=desc -reviewer::=reviewer -draft=draft -wip=draft || exit
 
 remote_url="$(git ls-remote --get-url)"
 readonly remote_url=$remote_url
@@ -38,10 +38,11 @@ case "$remote_url" in
             git -c push.default=current push
         fi
         # Use GitHub's cli to create the PR from the branch.
-        gh pr create \
-            --title "$(title)" \
-            --body "$(desc)" \
-            --reviewer "$(reviewer)"
+        eval "gh pr create \
+            --title '$(title)' \
+            --body '$(desc)' \
+            --reviewer '$(reviewer)' \
+            ${draft:+--draft}"
         ;;
 
     *gitlab.*)
@@ -51,6 +52,7 @@ case "$remote_url" in
             read -rp "Continue? (y/n): " yn
             [[ "$yn" =~ [Yy].* ]] || exit 1
         fi
+        if [[ -n $draft[1] ]] echo 'Creating draft PRs is currently not supported for gitlab.' >&2
         git -c push.default=current push -o merge_request.create
         ;;
 
@@ -59,7 +61,7 @@ case "$remote_url" in
         then
             git -c push.default=current push
         fi
-        git-pr_open_bitbucket "$remote_url" "$(title)" "$(desc | tr "\n" ' ')" "$(reviewer)"
+        git-pr_open_bitbucket "$remote_url" "${draft:+Draft: }$(title)" "$(desc | tr "\n" ' ')" "$(reviewer)" $draft
         ;;
 
     *)

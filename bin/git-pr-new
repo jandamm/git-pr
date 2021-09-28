@@ -1,6 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -euo pipefail
+
+zparseopts -D -E -draft=draft -wip=draft
 
 function error() {
     printf "%s\n" "$2" >&2
@@ -30,7 +32,7 @@ if ! git cherry-pick "$pr_commit"; then
     error 1 '\033[0;31mCould not cherry-pick commit. There is probably a dependency to a previous commit.'
 fi
 
-git-pr-open
+git-pr-open $draft
 
 # Go back to $default_branch branch.
 git switch "$default_branch"
