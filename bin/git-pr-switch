@@ -6,4 +6,4 @@ zparseopts -D -E c=create -create=create
 readonly pr_commit="${1:-head}"
 readonly branch_name="$(git-pr_branch_name "$pr_commit")"
 
-git switch $create[1] "$branch_name"
+git switch ${create[1]:-} "$branch_name"
