@@ -52,7 +52,7 @@ case "$remote_url" in
             read -rp "Continue? (y/n): " yn
             [[ "$yn" =~ [Yy].* ]] || exit 1
         fi
-        if [[ -n $draft[1] ]] echo 'Creating draft PRs is currently not supported for gitlab.' >&2
+        if [[ -n $draft ]] echo 'Creating draft PRs is currently not supported for gitlab.' >&2
         git -c push.default=current push -o merge_request.create
         ;;
 
