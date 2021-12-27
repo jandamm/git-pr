@@ -39,9 +39,9 @@ case "$remote_url" in
         fi
         # Use GitHub's cli to create the PR from the branch.
         eval "gh pr create \
-            --title '$(title)' \
-            --body '$(desc)' \
-            --reviewer '$(reviewer)' \
+            --title ${(qqq)$(title)} \
+            --body ${(qqq)$(desc)} \
+            --reviewer ${(qqq)$(reviewer)} \
             ${draft:+--draft}"
         ;;
 
