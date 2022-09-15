@@ -3,7 +3,7 @@
 function _git-pr_last_refs() {
 	local refs=$(git log --format='%h' head...origin/head 2>/dev/null)
 	if [[ -n $refs ]]; then
-		_values refs $refs
+		_values refs ${(f)refs}
 	fi
 }
 
