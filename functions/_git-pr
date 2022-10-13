@@ -24,7 +24,7 @@ function _git-pr() {
 		local options=('--help[Show help]' '-h[Show help]')
 		case $words[2] in
 			new)
-				options+=('--draft[Create a draft pr]' '--wip[Create a draft pr]')
+				options+=('--draft[Create a draft pr]' '--wip[Create a draft pr]' '--stash[Automatically stash the working copy]')
 				_git-pr_last_refs;;
 			open)
 				options+=(
@@ -37,7 +37,9 @@ function _git-pr() {
 				'--draft[Create a draft pr]'
 				'--wip[Create a draft pr]'
 			) ;;
-			update) _git-pr_last_refs;;
+			update)
+				options+=('--stash[Automatically stash the working copy]')
+				_git-pr_last_refs;;
 			switch)
 				_git-pr_last_refs
 				options+=('-c[Create and switch to a new branch]' '--create[Create and switch to a new branch]')

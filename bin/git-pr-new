@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-zparseopts -D -E -draft=draft -wip=draft
+zparseopts -D -E -draft=draft -wip=draft -stash=stash
 
 function error() {
     printf "%s\n" "$2" >&2
     exit "$1"
 }
 
-git-pr_stash save
+git-pr_stash save $stash
 
 readonly default_branch="$(git-pr_default_branch)"
 readonly pr_commit="${1:-$default_branch}"
